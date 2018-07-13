@@ -696,7 +696,7 @@ m & \equiv & {B_{H}}_{\mathrm{c}}
 a \equiv \mathcal{B}_{96..255}\Big(\mathtt{\tiny KEC}\Big(\mathtt{\tiny RLP}\big(\;(s, \boldsymbol{\sigma}[s]_{\mathrm{n}} - 1)\;\big)\Big)\Big)
 \end{equation}
 
-其中 $\mathtt{\tiny KEC}$ 是 Keccak 256 哈希函数，$\mathtt{\tiny RLP}$ 是 RLP 编码函数，$\mathcal{B}_{a..b}(X)$ 表示取二进制数据 $X$ 的位数范围 $[a, b]$ 的值，$\boldsymbol{\sigma}[x]$ 则是地址 $x$ 的状态，或者 $\varnothing$ 表示什么都不存在。注意，我们使用的是一个比发送者 nonce 要小的值（减了 1）；因为我们认定我们已经在这个调用之前对发送者的 nonce 加了 1，因此所用的值是发送者在该交易或VM操作开始时的的nonce。
+其中 $\mathtt{\tiny KEC}$ 是 Keccak 256 哈希函数，$\mathtt{\tiny RLP}$ 是 RLP 编码函数，$\mathcal{B}_{a..b}(X)$ 表示取二进制数据 $X$ 的位数范围 $[a, b]$ 的值，$\boldsymbol{\sigma}[x]$ 则是地址 $x$ 的状态，或者 $\varnothing$ 表示什么都不存在。注意，我们使用的是一个比发送者 nonce 要小的值（减了 1）；因为我们认定我们已经在这个调用之前对发送者的 nonce 加了 1，因此所用的值是发送者在该交易或VM操作开始时的nonce。
 
 账户的 nonce 被初始定义为 1，balance 为交易传入的值，storage 为空，codeHash 为空字符串的 Keccak 256 位哈希值；发送者的 balance 会减去转账值。于是这个变化的状态就成为 $\boldsymbol{\sigma}^*$：
 \begin{equation}
