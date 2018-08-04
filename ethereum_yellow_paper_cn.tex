@@ -191,7 +191,7 @@ $10^{18}$ & Ether（以太） \\
 
 任意长度的序列通常用粗体小写字母表示，例如 $\mathbf{o}$ 表示消息调用中输出的字节序列数据。对于特别重要的值，可能会使用粗体大写字母。
 
-我们认为标量都是正整数且属于集合 $\mathbb{P}$。所有的字节序列属于集合 $\mathbb{B}$，附录 \ref{app:rlp} 给出了正式的定义。可以用下角标表示这样的序列集合的限定长度，因此，长度为 32 的字节序列使用 $\mathbb{B}_{32}$ 表示，所有比 $2^{256}$ 小的正整数使用 $\mathbb{P}_{256}$ 表示。详细定义参见 \hyperlink{block}{\ref{subsec:The_Block}}。
+我们认为标量都是正整数且属于集合 $\mathbb{N}$。所有的字节序列属于集合 $\mathbb{B}$，附录 \ref{app:rlp} 给出了正式的定义。可以用下角标表示这样的序列集合的限定长度，因此，长度为 32 的字节序列使用 $\mathbb{B}_{32}$ 表示，所有比 $2^{256}$ 小的正整数使用 $\mathbb{N}_{256}$ 表示。详细定义参见 \hyperlink{block}{\ref{subsec:The_Block}}。
 
 使用方括号表示序列中的一个元素或子序列，例如 $\boldsymbol{\mu}_\mathbf{s}[0]$ 表示虚拟机栈中的第一个条目。对于子序列来说，使用省略号表示一定的范围，且含首尾限制，例如 $\boldsymbol{\mu}_\mathbf{m}[0..31]$ 表示虚拟机内存中的前 32 个条目。
 
@@ -413,8 +413,8 @@ m(\mathbf{x}, i) &\equiv& \mathtt{\tiny KEC}(\mathbf{x})[i, i + 1] \bmod 2048
 \begin{array}[t]{lclc}
 \linkdest{new_state_H__r}{}H_{\mathrm{r}} &\equiv& \mathtt{\small TRIE}(L_S(\Pi(\boldsymbol{\sigma}, B))) & \wedge \\
 \linkdest{Ommer_block_hash_H__o}{}H_{\mathrm{o}} &\equiv& \mathtt{\small KEC}(\mathtt{\small RLP}(L_H^*(B_{\mathbf{U}}))) & \wedge \\
-\linkdest{tx_block_hash_H__t}{}H_{\mathrm{t}} &\equiv& \mathtt{\small TRIE}(\{\forall i < \lVert B_{\mathbf{T}} \rVert, i \in \mathbb{P}: &\\&& \quad\quad p (i, L_{T}(B_{\mathbf{T}}[i]))\}) & \wedge \\
-\linkdest{Receipts_Root_H__e}{}H_{\mathrm{e}} &\equiv& \mathtt{\small TRIE}(\{\forall i < \lVert B_{\mathbf{R}} \rVert, i \in \mathbb{P}: &\\&& \quad\quad p(i, \hyperlink{transaction_receipt_preparation_function_for_RLP_serialisation}{L_{R}}(B_{\mathbf{R}}[i]))\}) & \wedge \\
+\linkdest{tx_block_hash_H__t}{}H_{\mathrm{t}} &\equiv& \mathtt{\small TRIE}(\{\forall i < \lVert B_{\mathbf{T}} \rVert, i \in \mathbb{N}: &\\&& \quad\quad p (i, L_{T}(B_{\mathbf{T}}[i]))\}) & \wedge \\
+\linkdest{Receipts_Root_H__e}{}H_{\mathrm{e}} &\equiv& \mathtt{\small TRIE}(\{\forall i < \lVert B_{\mathbf{R}} \rVert, i \in \mathbb{N}: &\\&& \quad\quad p(i, \hyperlink{transaction_receipt_preparation_function_for_RLP_serialisation}{L_{R}}(B_{\mathbf{R}}[i]))\}) & \wedge \\
 \linkdest{logs_Bloom_filter_H__b}{}H_{\mathrm{b}} &\equiv& \bigvee_{\mathbf{r} \in B_{\mathbf{R}}} \big( \mathbf{r}_{\mathrm{b}} \big)
 \end{array}
 \end{equation}
@@ -961,7 +961,7 @@ X\big(O(\boldsymbol{\sigma}, \boldsymbol{\mu}, A, I)\big) & \text{otherwise} \\
 $X$ 是被循环调用的（这里是递归，但是在实现方案中通常是去执行一个简单的迭代循环）直到 \hyperlink{zhalt}{$Z$} 变为 true，表示当前状态有异常，必须停止执行，并且所有的改动都会被舍弃；或者直到 \hyperlink{hhalt}{$H$} 变为一个序列（不是空集合），表示机器达到了正常控制的停止状态。
 
 \subsubsection{机器状态}
-机器状态 $\boldsymbol{\mu}$ 是由一个元组 $(g, pc, \mathbf{m}, i, \mathbf{s})$ 所定义的，其中包括可用的 gas $g$，程序计数器 $pc \in \mathbb{P}_{256}$，内存的内容 $\mathbf{m}$，内存中激活的字数（从 0 开始的连续计数） $i$，以及栈的内容 $\mathbf{s}$。内存的内容 $\boldsymbol{\mu}_\mathbf{m}$ 是大小为 $2^{256}$ 的全 0 序列。
+机器状态 $\boldsymbol{\mu}$ 是由一个元组 $(g, pc, \mathbf{m}, i, \mathbf{s})$ 所定义的，其中包括可用的 gas $g$，程序计数器 $pc \in \mathbb{N}_{256}$，内存的内容 $\mathbf{m}$，内存中激活的字数（从 0 开始的连续计数） $i$，以及栈的内容 $\mathbf{s}$。内存的内容 $\boldsymbol{\mu}_\mathbf{m}$ 是大小为 $2^{256}$ 的全 0 序列。
 
 为了提高可读性，应该使用大写字母简写（例如 {\small ADD}）的指令助记符来推演数字等式。完整的指令列表和它们的定义参见附录 \ref{app:vm}。
 
@@ -1544,7 +1544,7 @@ x^2 & \text{if}\ x \le 64 \\[0.5em]
 8(\ell_{E} - 32) + \lfloor \log_2(i[(96+\ell_{B})..(127+\ell_{B})]) \rfloor & \text{if}\ 32 < \ell_{E} \wedge i[(96 + \ell_{B})..(127 + \ell_{B})]\neq 0 \\
 8(\ell_{E} - 32) & \text{otherwise} \\
 \end{cases} \\
-\mathbf{o} &=& \left(B^E\bmod M\right)\in\mathbb{P}_{8\ell_{M}} \\
+\mathbf{o} &=& \left(B^E\bmod M\right)\in\mathbb{N}_{8\ell_{M}} \\
 \ell_{B} &\equiv& i[0..31] \\
 \ell_{E} &\equiv& i[32..63] \\
 \ell_{M} &\equiv& i[64..95] \\
